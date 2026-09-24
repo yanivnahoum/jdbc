@@ -2,6 +2,8 @@ package workshop.examples.ex07;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 
 import javax.sql.DataSource;
@@ -12,13 +14,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class ConnectionPoolExample {
+    private static final Logger log = LoggerFactory.getLogger(ConnectionPoolExample.class);
     private static final int WARM_UP_ITERATIONS = 5;
     private static final int MEASURED_ITERATIONS = 100;
 
     private ConnectionPoolExample() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main() throws SQLException {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(Db.URL);
         config.setUsername(Db.USER);
@@ -33,9 +36,9 @@ public final class ConnectionPoolExample {
             long driverManagerMillis = time(
                     () -> runWithDriverManager(MEASURED_ITERATIONS));
 
-            System.out.printf("pool:          %d ms%n", poolMillis);
-            System.out.printf("DriverManager: %d ms%n", driverManagerMillis);
-            System.out.println("These are illustrative local measurements, not a benchmark.");
+            log.atInfo().log("pool: {} ms", poolMillis);
+            log.atInfo().log("DriverManager: {} ms", driverManagerMillis);
+            log.atInfo().log("These are illustrative local measurements, not a benchmark.");
         }
     }
 

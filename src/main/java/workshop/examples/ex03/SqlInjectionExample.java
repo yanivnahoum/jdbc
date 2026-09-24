@@ -1,5 +1,7 @@
 package workshop.examples.ex03;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 
 import java.sql.Connection;
@@ -11,10 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class SqlInjectionExample {
+    private static final Logger log = LoggerFactory.getLogger(SqlInjectionExample.class);
+
     private SqlInjectionExample() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main(String[] args) throws SQLException {
         String email = switch (args.length == 0 ? "apostrophe" : args[0]) {
             case "apostrophe" -> "o'brien@example.com";
             case "attack" -> "x' OR 1=1 -- ";
@@ -24,14 +28,21 @@ public final class SqlInjectionExample {
 
         try (Connection connection = Db.connect()) {
             try {
-                System.out.println("Vulnerable result: "
-                                   + findByEmailVulnerable(connection, email, minimumPoints));
+                log.atInfo()
+                        .setMessage("Vulnerable result: {}")
+                        .addArgument(findByEmailVulnerable(connection, email, minimumPoints))
+                        .log();
             } catch (SQLException exception) {
-                System.out.println("Vulnerable query failed: " + exception.getMessage());
+                log.atInfo()
+                        .setMessage("Vulnerable query failed: {}")
+                        .addArgument(exception.getMessage())
+                        .log();
             }
 
-            System.out.println("Safe result: "
-                               + findByEmail(connection, email, minimumPoints));
+            log.atInfo()
+                    .setMessage("Safe result: {}")
+                    .addArgument(findByEmail(connection, email, minimumPoints))
+                    .log();
         }
     }
 
@@ -41,7 +52,7 @@ public final class SqlInjectionExample {
             int minimumPoints) throws SQLException {
         String sql = "SELECT id, full_name FROM customers WHERE email = '"
                      + email + "' AND loyalty_pts > " + minimumPoints;
-        System.out.println("Executing vulnerable SQL: " + sql);
+        log.atInfo().log("Executing vulnerable SQL: {}", sql);
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {

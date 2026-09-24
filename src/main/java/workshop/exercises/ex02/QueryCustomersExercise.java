@@ -1,5 +1,7 @@
 package workshop.exercises.ex02;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 import workshop.model.Customer;
 
@@ -8,12 +10,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public final class QueryCustomersExercise {
+    private static final Logger log = LoggerFactory.getLogger(QueryCustomersExercise.class);
+
     private QueryCustomersExercise() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main() throws SQLException {
         try (Connection connection = Db.connect()) {
-            findCustomers(connection, 100).forEach(System.out::println);
+            findCustomers(connection, 100)
+                    .forEach(customer -> log.atInfo().log("{}", customer));
         }
     }
 

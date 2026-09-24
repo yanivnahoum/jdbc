@@ -1,5 +1,7 @@
 package workshop.exercises.ex06;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 
 import java.sql.Connection;
@@ -7,13 +9,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public final class BatchInsertExercise {
+    private static final Logger log = LoggerFactory.getLogger(BatchInsertExercise.class);
     private static final int ROWS = 10_000;
     private static final int BATCH_SIZE = 1_000;
 
     private BatchInsertExercise() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main() throws SQLException {
         String url = Db.urlWithParameter("reWriteBatchedInserts", "true");
 
         try (Connection connection = DriverManager.getConnection(url, Db.USER, Db.PASSWORD)) {
@@ -22,8 +25,8 @@ public final class BatchInsertExercise {
                 long startedAt = System.nanoTime();
                 insertBatch(connection);
                 connection.commit();
-                System.out.printf(
-                        "batched: %d ms%n",
+                log.atInfo().log(
+                        "batched: {} ms",
                         (System.nanoTime() - startedAt) / 1_000_000);
             } catch (SQLException exception) {
                 try {

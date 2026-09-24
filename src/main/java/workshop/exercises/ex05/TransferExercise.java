@@ -1,5 +1,7 @@
 package workshop.exercises.ex05;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 import workshop.model.Account;
 
@@ -12,16 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class TransferExercise {
+    private static final Logger log = LoggerFactory.getLogger(TransferExercise.class);
+
     private TransferExercise() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main(String[] args) throws SQLException {
         BigDecimal amount = new BigDecimal(args.length == 0 ? "25.00" : args[0]);
 
         try (Connection connection = Db.connect()) {
-            System.out.println("Before: " + findAccounts(connection));
+            log.atInfo().log("Before: {}", findAccounts(connection));
             transfer(connection, 1, 2, amount);
-            System.out.println("After:  " + findAccounts(connection));
+            log.atInfo().log("After: {}", findAccounts(connection));
         }
     }
 

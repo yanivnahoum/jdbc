@@ -1,5 +1,7 @@
 package workshop.examples.ex02;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 import workshop.model.Customer;
 
@@ -12,14 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class QueryCustomersExample {
+    private static final Logger log = LoggerFactory.getLogger(QueryCustomersExample.class);
+
     private QueryCustomersExample() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main(String[] args) throws SQLException {
         int minimumPoints = args.length == 0 ? 100 : Integer.parseInt(args[0]);
 
         try (Connection connection = Db.connect()) {
-            findCustomers(connection, minimumPoints).forEach(System.out::println);
+            findCustomers(connection, minimumPoints)
+                    .forEach(customer -> log.atInfo().log("{}", customer));
         }
     }
 

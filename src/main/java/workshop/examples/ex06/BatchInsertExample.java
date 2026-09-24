@@ -1,5 +1,7 @@
 package workshop.examples.ex06;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 
 import java.sql.Connection;
@@ -8,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public final class BatchInsertExample {
+    private static final Logger log = LoggerFactory.getLogger(BatchInsertExample.class);
     private static final int WARM_UP_ROWS = 100;
     private static final int MEASURED_ROWS = 10_000;
     private static final int BATCH_SIZE = 1_000;
@@ -15,15 +18,15 @@ public final class BatchInsertExample {
     private BatchInsertExample() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main() throws SQLException {
         String url = Db.urlWithParameter("reWriteBatchedInserts", "true");
 
         long oneByOneMillis = measure(url, false);
         long batchMillis = measure(url, true);
 
-        System.out.printf("one-by-one: %d ms%n", oneByOneMillis);
-        System.out.printf("batched:    %d ms%n", batchMillis);
-        System.out.println("These are illustrative local measurements, not a benchmark.");
+        log.atInfo().log("one-by-one: {} ms", oneByOneMillis);
+        log.atInfo().log("batched: {} ms", batchMillis);
+        log.atInfo().log("These are illustrative local measurements, not a benchmark.");
     }
 
     private static long measure(String url, boolean batched) throws SQLException {

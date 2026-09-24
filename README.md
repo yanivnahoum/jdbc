@@ -34,7 +34,7 @@ docker compose up -d
 Run the first connection check:
 
 ```shell
-./mvnw -q exec:java \
+./mvnw exec:java \
   -Dexec.mainClass=workshop.examples.ex01.ConnectExample
 ```
 
@@ -74,7 +74,7 @@ database containing data you need to keep.
 Run any class with:
 
 ```shell
-./mvnw -q compile exec:java -Dexec.mainClass=fully.qualified.ClassName
+./mvnw compile exec:java -Dexec.mainClass=fully.qualified.ClassName
 ```
 
 ## Block A: Reading data
@@ -90,7 +90,7 @@ try-with-resources.
 Run the exercise:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex01.ConnectExercise
 ```
 
@@ -131,7 +131,7 @@ Implement `findCustomers()`:
 Run it:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex02.QueryCustomersExercise
 ```
 
@@ -149,7 +149,7 @@ parameters are the default for values.
 Run the reference example with an apostrophe in the email:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.examples.ex03.SqlInjectionExample \
   -Dexec.args=apostrophe
 ```
@@ -157,7 +157,7 @@ Run the reference example with an apostrophe in the email:
 Then run its local demonstration payload:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.examples.ex03.SqlInjectionExample \
   -Dexec.args=attack
 ```
@@ -202,7 +202,7 @@ Implement the three methods in the exercise:
 Run it once after resetting the database:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex04.WriteCustomersExercise
 ```
 
@@ -223,7 +223,7 @@ First, temporarily implement the transfer as `credit()` followed by `debit()`
 with auto-commit left on. Reset the database, then run:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex05.TransferExercise \
   -Dexec.args=500.00
 ```
@@ -247,11 +247,11 @@ Reset the database, then replace the naive implementation:
 Run the failing transfer again, then run a valid one:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex05.TransferExercise \
   -Dexec.args=500.00
 
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex05.TransferExercise \
   -Dexec.args=25.00
 ```
@@ -280,10 +280,10 @@ Implement `insertBatch()`:
 Run the reference comparison and then your exercise:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.examples.ex06.BatchInsertExample
 
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex06.BatchInsertExercise
 ```
 
@@ -311,14 +311,14 @@ Implement `createDataSource()`:
 Run it:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex07.ConnectionPoolExercise
 ```
 
 Then run the reference timing comparison:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.examples.ex07.ConnectionPoolExample
 ```
 
@@ -355,14 +355,14 @@ DAO only after attempting the exercise.
 Run your DAO with:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.exercises.ex08.DaoExerciseRunner
 ```
 
 Run the reference error-handling demonstration:
 
 ```shell
-./mvnw -q compile exec:java \
+./mvnw compile exec:java \
   -Dexec.mainClass=workshop.examples.ex08.DaoExample
 ```
 

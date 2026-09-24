@@ -1,6 +1,8 @@
 package workshop.exercises.ex07;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,16 +10,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class ConnectionPoolExercise {
+    private static final Logger log = LoggerFactory.getLogger(ConnectionPoolExercise.class);
+
     private ConnectionPoolExercise() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main() throws SQLException {
         try (HikariDataSource dataSource = createDataSource();
              Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT 1")) {
             resultSet.next();
-            System.out.println("Database returned " + resultSet.getInt(1));
+            log.atInfo().log("Database returned {}", resultSet.getInt(1));
         }
     }
 

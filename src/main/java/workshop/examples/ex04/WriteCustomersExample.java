@@ -1,5 +1,7 @@
 package workshop.examples.ex04;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 
 import java.sql.Connection;
@@ -11,19 +13,21 @@ import java.sql.Types;
 import java.time.LocalDate;
 
 public final class WriteCustomersExample {
+    private static final Logger log = LoggerFactory.getLogger(WriteCustomersExample.class);
+
     private WriteCustomersExample() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main() throws SQLException {
         try (Connection connection = Db.connect()) {
             long id = insertCustomer(connection);
-            System.out.println("Inserted customer id=" + id);
+            log.atInfo().log("Inserted customer id={}", id);
 
             int updated = updatePoints(connection, "nobody@example.com", 500);
-            System.out.println("Updated rows=" + updated);
+            log.atInfo().log("Updated rows={}", updated);
 
             int deleted = deleteCustomer(connection, "delete.me@example.com");
-            System.out.println("Deleted rows=" + deleted);
+            log.atInfo().log("Deleted rows={}", deleted);
         }
     }
 

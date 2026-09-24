@@ -2,15 +2,19 @@ package workshop.exercises.ex08;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import workshop.Db;
 
 import java.sql.SQLException;
 
 public final class DaoExerciseRunner {
+    private static final Logger log = LoggerFactory.getLogger(DaoExerciseRunner.class);
+
     private DaoExerciseRunner() {
     }
 
-    public static void main(String[] args) throws SQLException {
+    static void main() throws SQLException {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(Db.URL);
         config.setUsername(Db.USER);
@@ -18,7 +22,7 @@ public final class DaoExerciseRunner {
 
         try (HikariDataSource dataSource = new HikariDataSource(config)) {
             CustomerDaoExercise customerDao = new CustomerDaoExercise(dataSource);
-            customerDao.findAll().forEach(System.out::println);
+            customerDao.findAll().forEach(customer -> log.atInfo().log("{}", customer));
         }
     }
 }
