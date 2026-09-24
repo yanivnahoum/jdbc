@@ -6,9 +6,9 @@
 
 Participants complete a short setup check before the three-hour session:
 
-* `java -version` and `mvn -version` both report JDK 25
+* `java -version` and `./mvnw -version` both report JDK 25
 * `docker compose up -d` starts PostgreSQL
-* `mvn -q compile` succeeds
+* `./mvnw -q compile` succeeds
 
 ## Block A — Reading data (50 min)
 
