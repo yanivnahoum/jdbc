@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class TransferExample {
@@ -116,7 +117,7 @@ public final class TransferExample {
 
         try (PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
-            var accounts = new java.util.ArrayList<Account>();
+            var accounts = new ArrayList<Account>();
             while (resultSet.next()) {
                 accounts.add(new Account(
                         resultSet.getLong("id"),
