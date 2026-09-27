@@ -25,7 +25,7 @@ public final class ConnectExercise {
     }
 
     private static Connection openConnection() throws SQLException {
-        // TODO: Open and return a connection using DriverManager and workshop.Db.
+        // TODO: Open and return a connection using DriverManager and com.att.training.jdbc.Db.
         throw new UnsupportedOperationException("Complete exercise 1");
     }
 }
