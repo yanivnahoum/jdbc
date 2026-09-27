@@ -90,6 +90,5 @@ public final class SqlInjectionExample {
         return customers;
     }
 
-    public record CustomerSummary(long id, String fullName) {
-    }
+    public record CustomerSummary(long id, String fullName) {}
 }
