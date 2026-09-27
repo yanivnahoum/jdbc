@@ -1,6 +1,6 @@
 # JDBC Workshop — Syllabus
 
-3 hours · Java 25 · Maven · PostgreSQL 17 (Docker)
+3 hours · Java 25 · Maven · PostgreSQL 18 (Docker)
 
 ## Before the workshop
 

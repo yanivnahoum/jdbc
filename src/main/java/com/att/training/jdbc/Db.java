@@ -8,8 +8,8 @@ public final class Db {
     public static final String URL = envOrDefault(
             "JDBC_URL",
             "jdbc:postgresql://localhost:5432/workshop");
-    public static final String USER = envOrDefault("JDBC_USER", "com/att/training/jdbc");
-    public static final String PASSWORD = envOrDefault("JDBC_PASSWORD", "com/att/training/jdbc");
+    public static final String USER = envOrDefault("JDBC_USER", "workshop");
+    public static final String PASSWORD = envOrDefault("JDBC_PASSWORD", "workshop");
 
     private Db() {
     }

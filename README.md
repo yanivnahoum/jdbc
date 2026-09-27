@@ -1,6 +1,6 @@
 # JDBC Workshop
 
-A hands-on introduction to JDBC using Java 25, Maven, PostgreSQL 17, and
+A hands-on introduction to JDBC using Java 25, Maven, PostgreSQL 18, and
 HikariCP. Each chapter has a small reference example followed by a focused
 exercise.
 
@@ -24,21 +24,21 @@ one selected in your shell, so check both outputs.
 
 ## Setup
 
-Start PostgreSQL and compile the project:
+Start PostgreSQL and build the project:
 
 ```shell
 docker compose up -d
-./mvnw -q compile
+./mvnw verify
 ```
 
 Run the first connection check:
 
 ```shell
 ./mvnw exec:java \
-  -Dexec.mainClass=ex01.examples.com.att.training.jdbc.ConnectExample
+  -Dexec.mainClass=com.att.training.jdbc.examples.ex01.ConnectExample
 ```
 
-You are ready when it prints `Connected to PostgreSQL 17...`.
+You are ready when it logs `Connected to PostgreSQL 18...`.
 
 The examples use these defaults:
 
@@ -60,6 +60,12 @@ docker compose up -d
 
 This command deletes the workshop database volume. Do not use it for a
 database containing data you need to keep.
+
+PostgreSQL 18's official Docker image stores versioned database data beneath
+`/var/lib/postgresql`, so `compose.yml` mounts the named volume at that path.
+When changing PostgreSQL major versions for this disposable workshop database,
+use the reset command above rather than reusing files created by an older
+server.
 
 ## Project map
 
@@ -91,11 +97,11 @@ Run the exercise:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex01.exercises.com.att.training.jdbc.ConnectExercise
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex01.ConnectExercise
 ```
 
 Implement `openConnection()` using `DriverManager` and the values in
-`jdbc`. Keep the returned connection inside the existing
+`Db`. Keep the returned connection inside the existing
 try-with-resources block.
 
 **Done when:** the program prints the PostgreSQL product name and version.
@@ -132,7 +138,7 @@ Run it:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex02.exercises.com.att.training.jdbc.QueryCustomersExercise
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex02.QueryCustomersExercise
 ```
 
 **Done when:** the output contains both a customer with `loyaltyPts=null` and
@@ -150,7 +156,7 @@ Run the reference example with an apostrophe in the email:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex03.examples.com.att.training.jdbc.SqlInjectionExample \
+  -Dexec.mainClass=com.att.training.jdbc.examples.ex03.SqlInjectionExample \
   -Dexec.args=apostrophe
 ```
 
@@ -158,7 +164,7 @@ Then run its local demonstration payload:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex03.examples.com.att.training.jdbc.SqlInjectionExample \
+  -Dexec.mainClass=com.att.training.jdbc.examples.ex03.SqlInjectionExample \
   -Dexec.args=attack
 ```
 
@@ -203,7 +209,7 @@ Run it once after resetting the database:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex04.exercises.com.att.training.jdbc.WriteCustomersExercise
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex04.WriteCustomersExercise
 ```
 
 Run it a second time to observe the unique-email constraint failure.
@@ -224,7 +230,7 @@ with auto-commit left on. Reset the database, then run:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex05.exercises.com.att.training.jdbc.TransferExercise \
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex05.TransferExercise \
   -Dexec.args=500.00
 ```
 
@@ -248,11 +254,11 @@ Run the failing transfer again, then run a valid one:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex05.exercises.com.att.training.jdbc.TransferExercise \
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex05.TransferExercise \
   -Dexec.args=500.00
 
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex05.exercises.com.att.training.jdbc.TransferExercise \
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex05.TransferExercise \
   -Dexec.args=25.00
 ```
 
@@ -281,10 +287,10 @@ Run the reference comparison and then your exercise:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex06.examples.com.att.training.jdbc.BatchInsertExample
+  -Dexec.mainClass=com.att.training.jdbc.examples.ex06.BatchInsertExample
 
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex06.exercises.com.att.training.jdbc.BatchInsertExercise
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex06.BatchInsertExercise
 ```
 
 The printed times are local observations, not rigorous benchmarks. JVM
@@ -312,14 +318,14 @@ Run it:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex07.exercises.com.att.training.jdbc.ConnectionPoolExercise
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex07.ConnectionPoolExercise
 ```
 
 Then run the reference timing comparison:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex07.examples.com.att.training.jdbc.ConnectionPoolExample
+  -Dexec.mainClass=com.att.training.jdbc.examples.ex07.ConnectionPoolExample
 ```
 
 Pool construction is outside the timed section. Treat the numbers as an
@@ -356,14 +362,14 @@ Run your DAO with:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex08.exercises.com.att.training.jdbc.DaoExerciseRunner
+  -Dexec.mainClass=com.att.training.jdbc.exercises.ex08.DaoExerciseRunner
 ```
 
 Run the reference error-handling demonstration:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=ex08.examples.com.att.training.jdbc.DaoExample
+  -Dexec.mainClass=com.att.training.jdbc.examples.ex08.DaoExample
 ```
 
 It recognizes PostgreSQL SQL state `23505` as a unique-constraint violation.
