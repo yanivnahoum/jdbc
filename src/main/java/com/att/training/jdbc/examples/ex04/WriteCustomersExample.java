@@ -59,6 +59,28 @@ public final class WriteCustomersExample {
         }
     }
 
+    private static long insertCustomerWithReturning(Connection connection) throws SQLException {
+        String sql = """
+                INSERT INTO customers (email, full_name, birth_date, loyalty_pts)
+                VALUES (?, ?, ?, ?)
+                RETURNING id
+                """;
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, "ada@example.com");
+            statement.setString(2, "Ada Lovelace");
+            statement.setObject(3, LocalDate.of(1990, 3, 12));
+            statement.setObject(4, null, Types.INTEGER);
+
+            try (ResultSet result = statement.executeQuery()) {
+                if (!result.next()) {
+                    throw new SQLException("The database did not return the inserted customer");
+                }
+                return result.getLong("id");
+            }
+        }
+    }
+
     private static int updatePoints(Connection connection, String email, int points)
             throws SQLException {
         String sql = """
