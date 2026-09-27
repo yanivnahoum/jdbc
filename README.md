@@ -7,7 +7,7 @@ exercise.
 ## Prerequisites
 
 - JDK 25
-- Maven
+- Maven (Maven Wrapper included)
 - Docker with Docker Compose
 - An IDE or editor with Java support
 
@@ -35,7 +35,7 @@ Run the first connection check:
 
 ```shell
 ./mvnw exec:java \
-  -Dexec.mainClass=workshop.examples.ex01.ConnectExample
+  -Dexec.mainClass=ex01.examples.com.att.training.jdbc.ConnectExample
 ```
 
 You are ready when it prints `Connected to PostgreSQL 17...`.
@@ -66,10 +66,10 @@ database containing data you need to keep.
 - [`compose.yml`](compose.yml) starts PostgreSQL.
 - [`sql/01_schema.sql`](sql/01_schema.sql) defines the tables.
 - [`sql/02_seed.sql`](sql/02_seed.sql) creates the starting data.
-- [`Db.java`](src/main/java/workshop/Db.java) holds shared connection settings.
-- [`examples/`](src/main/java/workshop/examples) contains completed reference
+- [`Db.java`](src/main/java/com/att/training/jdbc/Db.java) holds shared connection settings.
+- [`examples/`](src/main/java/com/att/training/jdbc/examples) contains completed reference
   examples.
-- [`exercises/`](src/main/java/workshop/exercises) contains the files you edit.
+- [`exercises/`](src/main/java/com/att/training/jdbc/exercises) contains the files you edit.
 
 Run any class with:
 
@@ -84,18 +84,18 @@ Run any class with:
 **Learn:** JDBC URLs, `DriverManager`, `Connection`, database metadata, and
 try-with-resources.
 
-- [Example](src/main/java/workshop/examples/ex01/ConnectExample.java)
-- [Exercise](src/main/java/workshop/exercises/ex01/ConnectExercise.java)
+- [Example](src/main/java/com/att/training/jdbc/examples/ex01/ConnectExample.java)
+- [Exercise](src/main/java/com/att/training/jdbc/exercises/ex01/ConnectExercise.java)
 
 Run the exercise:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex01.ConnectExercise
+  -Dexec.mainClass=ex01.exercises.com.att.training.jdbc.ConnectExercise
 ```
 
 Implement `openConnection()` using `DriverManager` and the values in
-`workshop.Db`. Keep the returned connection inside the existing
+`jdbc`. Keep the returned connection inside the existing
 try-with-resources block.
 
 **Done when:** the program prints the PostgreSQL product name and version.
@@ -105,8 +105,8 @@ try-with-resources block.
 **Learn:** `PreparedStatement`, bind parameters, `ResultSet` cursors, typed
 getters, Java records, SQL `NULL`, and `LocalDate`.
 
-- [Example](src/main/java/workshop/examples/ex02/QueryCustomersExample.java)
-- [Exercise](src/main/java/workshop/exercises/ex02/QueryCustomersExercise.java)
+- [Example](src/main/java/com/att/training/jdbc/examples/ex02/QueryCustomersExample.java)
+- [Exercise](src/main/java/com/att/training/jdbc/exercises/ex02/QueryCustomersExercise.java)
 
 Use this query as a Java text block:
 
@@ -132,7 +132,7 @@ Run it:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex02.QueryCustomersExercise
+  -Dexec.mainClass=ex02.exercises.com.att.training.jdbc.QueryCustomersExercise
 ```
 
 **Done when:** the output contains both a customer with `loyaltyPts=null` and
@@ -143,14 +143,14 @@ one with a numeric value.
 **Learn:** why string concatenation turns data into SQL syntax and why bind
 parameters are the default for values.
 
-- [Example](src/main/java/workshop/examples/ex03/SqlInjectionExample.java)
-- [Exercise](src/main/java/workshop/exercises/ex03/SafeCustomerSearchExercise.java)
+- [Example](src/main/java/com/att/training/jdbc/examples/ex03/SqlInjectionExample.java)
+- [Exercise](src/main/java/com/att/training/jdbc/exercises/ex03/SafeCustomerSearchExercise.java)
 
 Run the reference example with an apostrophe in the email:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.examples.ex03.SqlInjectionExample \
+  -Dexec.mainClass=ex03.examples.com.att.training.jdbc.SqlInjectionExample \
   -Dexec.args=apostrophe
 ```
 
@@ -158,7 +158,7 @@ Then run its local demonstration payload:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.examples.ex03.SqlInjectionExample \
+  -Dexec.mainClass=ex03.examples.com.att.training.jdbc.SqlInjectionExample \
   -Dexec.args=attack
 ```
 
@@ -187,8 +187,8 @@ returns no customers from the exercise.
 **Learn:** `executeUpdate()`, affected-row counts, generated keys, and binding
 SQL `NULL`.
 
-- [Example](src/main/java/workshop/examples/ex04/WriteCustomersExample.java)
-- [Exercise](src/main/java/workshop/exercises/ex04/WriteCustomersExercise.java)
+- [Example](src/main/java/com/att/training/jdbc/examples/ex04/WriteCustomersExample.java)
+- [Exercise](src/main/java/com/att/training/jdbc/exercises/ex04/WriteCustomersExercise.java)
 
 Implement the three methods in the exercise:
 
@@ -203,7 +203,7 @@ Run it once after resetting the database:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex04.WriteCustomersExercise
+  -Dexec.mainClass=ex04.exercises.com.att.training.jdbc.WriteCustomersExercise
 ```
 
 Run it a second time to observe the unique-email constraint failure.
@@ -216,15 +216,15 @@ prints `0`, and the second insert reports a duplicate key.
 **Learn:** auto-commit, commit, rollback, connection-scoped transactions,
 affected-row validation, and `BigDecimal`.
 
-- [Example](src/main/java/workshop/examples/ex05/TransferExample.java)
-- [Exercise](src/main/java/workshop/exercises/ex05/TransferExercise.java)
+- [Example](src/main/java/com/att/training/jdbc/examples/ex05/TransferExample.java)
+- [Exercise](src/main/java/com/att/training/jdbc/exercises/ex05/TransferExercise.java)
 
 First, temporarily implement the transfer as `credit()` followed by `debit()`
 with auto-commit left on. Reset the database, then run:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex05.TransferExercise \
+  -Dexec.mainClass=ex05.exercises.com.att.training.jdbc.TransferExercise \
   -Dexec.args=500.00
 ```
 
@@ -248,11 +248,11 @@ Run the failing transfer again, then run a valid one:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex05.TransferExercise \
+  -Dexec.mainClass=ex05.exercises.com.att.training.jdbc.TransferExercise \
   -Dexec.args=500.00
 
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex05.TransferExercise \
+  -Dexec.mainClass=ex05.exercises.com.att.training.jdbc.TransferExercise \
   -Dexec.args=25.00
 ```
 
@@ -266,8 +266,8 @@ transfer changes both.
 **Learn:** `addBatch()`, `executeBatch()`, periodic flushing, explicit
 transactions, and pgJDBC's optional `reWriteBatchedInserts` optimization.
 
-- [Example](src/main/java/workshop/examples/ex06/BatchInsertExample.java)
-- [Exercise](src/main/java/workshop/exercises/ex06/BatchInsertExercise.java)
+- [Example](src/main/java/com/att/training/jdbc/examples/ex06/BatchInsertExample.java)
+- [Exercise](src/main/java/com/att/training/jdbc/exercises/ex06/BatchInsertExercise.java)
 
 Implement `insertBatch()`:
 
@@ -281,10 +281,10 @@ Run the reference comparison and then your exercise:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.examples.ex06.BatchInsertExample
+  -Dexec.mainClass=ex06.examples.com.att.training.jdbc.BatchInsertExample
 
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex06.BatchInsertExercise
+  -Dexec.mainClass=ex06.exercises.com.att.training.jdbc.BatchInsertExercise
 ```
 
 The printed times are local observations, not rigorous benchmarks. JVM
@@ -298,13 +298,13 @@ why batching and a transaction are normally used together.
 **Learn:** `DataSource`, HikariCP, borrowing and returning connections, and why
 pool size is bounded.
 
-- [Example](src/main/java/workshop/examples/ex07/ConnectionPoolExample.java)
-- [Exercise](src/main/java/workshop/exercises/ex07/ConnectionPoolExercise.java)
+- [Example](src/main/java/com/att/training/jdbc/examples/ex07/ConnectionPoolExample.java)
+- [Exercise](src/main/java/com/att/training/jdbc/exercises/ex07/ConnectionPoolExercise.java)
 
 Implement `createDataSource()`:
 
 1. Create a `HikariConfig`.
-2. Set the URL, username, and password from `workshop.Db`.
+2. Set the URL, username, and password from `jdbc`.
 3. Set the maximum pool size to `10`.
 4. Return a `HikariDataSource`.
 
@@ -312,14 +312,14 @@ Run it:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex07.ConnectionPoolExercise
+  -Dexec.mainClass=ex07.exercises.com.att.training.jdbc.ConnectionPoolExercise
 ```
 
 Then run the reference timing comparison:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.examples.ex07.ConnectionPoolExample
+  -Dexec.mainClass=ex07.examples.com.att.training.jdbc.ConnectionPoolExample
 ```
 
 Pool construction is outside the timed section. Treat the numbers as an
@@ -334,10 +334,10 @@ physical database connection.
 **Learn:** resource ownership, `DataSource`, stable column mappings, nullable
 values, SQL state codes, and avoiding message parsing.
 
-- [Reference DAO](src/main/java/workshop/examples/ex08/CustomerDao.java)
-- [Reference runner](src/main/java/workshop/examples/ex08/DaoExample.java)
-- [Exercise](src/main/java/workshop/exercises/ex08/CustomerDaoExercise.java)
-- [Exercise runner](src/main/java/workshop/exercises/ex08/DaoExerciseRunner.java)
+- [Reference DAO](src/main/java/com/att/training/jdbc/examples/ex08/CustomerDao.java)
+- [Reference runner](src/main/java/com/att/training/jdbc/examples/ex08/DaoExample.java)
+- [Exercise](src/main/java/com/att/training/jdbc/exercises/ex08/CustomerDaoExercise.java)
+- [Exercise runner](src/main/java/com/att/training/jdbc/exercises/ex08/DaoExerciseRunner.java)
 
 Find and repair these defects in `CustomerDaoExercise`:
 
@@ -356,14 +356,14 @@ Run your DAO with:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.exercises.ex08.DaoExerciseRunner
+  -Dexec.mainClass=ex08.exercises.com.att.training.jdbc.DaoExerciseRunner
 ```
 
 Run the reference error-handling demonstration:
 
 ```shell
 ./mvnw compile exec:java \
-  -Dexec.mainClass=workshop.examples.ex08.DaoExample
+  -Dexec.mainClass=ex08.examples.com.att.training.jdbc.DaoExample
 ```
 
 It recognizes PostgreSQL SQL state `23505` as a unique-constraint violation.
