@@ -33,8 +33,7 @@ public final class ConnectionPoolExample {
             runWithDriverManager(WARM_UP_ITERATIONS);
 
             long poolMillis = time(() -> runWithPool(dataSource, MEASURED_ITERATIONS));
-            long driverManagerMillis = time(
-                    () -> runWithDriverManager(MEASURED_ITERATIONS));
+            long driverManagerMillis = time(() -> runWithDriverManager(MEASURED_ITERATIONS));
 
             log.atInfo().log("pool: {} ms", poolMillis);
             log.atInfo().log("DriverManager: {} ms", driverManagerMillis);
